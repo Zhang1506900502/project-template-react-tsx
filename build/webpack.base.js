@@ -15,8 +15,8 @@ module.exports = {
     },
     module: {
         rules: [{
-                test: /.(ts|tsx)$/, // 匹配.ts, tsx文件
-                use: {
+                test: /.(ts|tsx)$/, // 匹配.ts, tsx文件\
+                use: ['thread-loader', {
                     loader: 'babel-loader',
                     options: {
                         // 预设执行顺序由右往左,所以先处理ts,再处理jsx
@@ -25,7 +25,8 @@ module.exports = {
                             '@babel/preset-typescript'
                         ]
                     }
-                }
+                }]
+
             },
             {
                 test: /.(css|scss|sass)$/, //匹配 css 文件
@@ -82,5 +83,8 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env.BASE_ENV': JSON.stringify(process.env.BASE_ENV)
         })
-    ]
+    ],
+    cache: {
+        type: 'filesystem', // 使用文件缓存
+    },
 }
